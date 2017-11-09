@@ -1,0 +1,25 @@
+	.data
+	myWord: .space 9
+	askInput: 		.asciiz "\n Input a string: \n"
+	printInput: 		.asciiz "\n You typed in: "
+	.text
+main:
+	li $v0, 4
+	la $a0, askInput
+	syscall
+	
+	li $v0, 8
+	la $a0, myWord
+	la $a1, 9
+	syscall
+	
+	li $v0, 4
+	la $a0, printInput
+	syscall
+
+	li $v0, 4
+	la $a0, myWord	
+	syscall
+
+	li $v0, 10
+	syscall
