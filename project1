@@ -1,25 +1,19 @@
-	.data
-	myWord: .space 9
-	askInput: 		.asciiz "\n Input a string: \n"
-	printInput: 		.asciiz "\n You typed in: "
-	.text
+	.data			#mark beginning of data segment
+
+	myWord: .space 9	#allocate 9 bytes of storage for 8 charecters in global variable myWord
+	askInput: 		#store charectar sequence of initial output string
+		.asciiz "\n Input a string: \n"
+
+	.text			#mark beginning of text segment
 main:
-	li $v0, 4
-	la $a0, askInput
+	li $v0, 4		#call code to print string
+	la $a0, askInput	#load address of askInput in argument $a0
 	syscall
 	
-	li $v0, 8
-	la $a0, myWord
-	la $a1, 9
+	li $v0, 8		#call code to read string
+	la $a0, myWord		#load address of myWord in argument $a0
+	la $a1, 9		#gets length of space in myWord to avoid exceeding memory limit
 	syscall
 	
-	li $v0, 4
-	la $a0, printInput
-	syscall
-
-	li $v0, 4
-	la $a0, myWord	
-	syscall
-
-	li $v0, 10
+	li $v0, 10		#call code to exit program
 	syscall
