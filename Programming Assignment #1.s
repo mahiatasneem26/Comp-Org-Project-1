@@ -21,10 +21,10 @@ main:
 	la $a1, 9			#gets length of space in myWord to avoid exceeding memory limit
 	syscall				#syscall to read user_input and store the string in memory
 	
-	#check if first letter is valid:
-	
+	addi $t7, $t0, 8		#add the value of the 9th byte of user_input to the register $t7
+
+iterate_string:				#iterate through user_input to check if all the charectars are valid	
 	lb $t1, 0($t0)			#load first byte of memory into register $t1
-	
 	blt $t1, 48, if_invalid		#branch to if_invalid label if value in $t1 is less than 48 (ASCII dec for number 0)		
 	blt $t1, 58, if_valid		#branch to if_invalid label if value in $t1 is less than 58 (next ASCII dec for number 9)		
 	blt $t1, 65, if_invalid		# 65 = ASCII dec for 'A'
@@ -40,6 +40,8 @@ if_invalid:				#label to call invalid_input and exit program
 	li $v0, 10			#call code to exit program
 	syscall
 if_valid:				#label to call valid_input and exit program
+	addi $t0, $t0, 1		#increment offset of $t0 by 1
+	bne $t0, $t7, iterate_string	#if offset of $t0 is not equal to $t7, branch to iterate_string to continue looping
 	li $v0, 4
 	la $a0, valid_input
 	syscall
