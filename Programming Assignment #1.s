@@ -32,8 +32,8 @@ iterate_string:				#iterate through user_input to check if all the charectars ar
 	lb $t1, 0($t0)			#load first byte of memory into register $t1
 
 
-	beq $t1, 0, less_than_eight	#if the value at offset 0 < 8 or <10, branch to less_than 8
-	beq $t1, 10, less_than_eight
+	beq $t1, 0, less_than_ten	#if the value at offset 0 < 8 or <10, branch to less_than 8
+	beq $t1, 10, less_than_ten
 	blt $t1, 48, if_invalid		#branch to if_invalid label if value in $t1 is less than 48 (ASCII dec for number 0)		
 	addi $s1, $0, 48		# store the ASCII dec to be subtracted in $s1
 	blt $t1, 58, if_valid		#branch to if_invalid label if value in $t1 is less than 58 (next ASCII dec for number 9)		
@@ -59,11 +59,11 @@ if_valid:				#label to call valid_input and exit program
 	add $s2, $s4, $s2		# add and store the value of $s4 and $s2 to $s2
 	bne $t0, $t7, iterate_string	#if offset of $t0 is not equal to $t7, branch to iterate_string to continue looping
 
-less_than_eight:			#if the value at offset 0 < 8 branch to this label
+less_than_ten:			#if the value at offset 0 < 8 branch to this label
 	addi $s0, $0, 10		#store 10 in $s0
 	addi $t0, $t0, -1		#subtract 1 from user_input
 	lb $t1, 0($t0)
-	blt $t1, 56, exit_loop		#if 0($t0) < 8, branch to exit_loop
+	blt $t1, 58, exit_loop		#if 0($t0) < 8, branch to exit_loop
 	divu $s2, $s0			# else divide by 10 and store in $s2
 	mflo $a0			# move lower bits to $a0 and print
 	li $v0, 1
