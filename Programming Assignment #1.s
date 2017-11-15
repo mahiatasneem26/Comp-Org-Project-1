@@ -2,7 +2,7 @@
 
 	user_input: .space 9		#allocate 9 bytes of storage for 8 charecters in global variable user_input
 	invalid_input:			#store charectar sequence to prompt if user_input is invalid
-		.asciiz "\n Invalid hexadecimal number \n"
+		.asciiz "Invalid hexadecimal number."
 
 	.text				#mark beginning of text segment
 
@@ -76,3 +76,5 @@ exit_loop:
 	syscall
 	li $v0, 10			#call code to exit program
 	syscall
+
+
